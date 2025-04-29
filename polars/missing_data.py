@@ -8,7 +8,7 @@
 
 import marimo
 
-__generated_with = "0.12.8"
+__generated_with = "0.11.13"
 app = marimo.App(width="medium")
 
 
@@ -24,7 +24,7 @@ def _(mo):
         """
         # Handling Missing Data in Polars
 
-        _By [Your Name]._  
+        _By Felix Najera._  
 
         In real‑world datasets, missing values are inevitable. Polars offers a rich set of methods to detect, remove, and impute missing data efficiently. This notebook walks through common patterns and best practices for dealing with nulls in Polars DataFrames.
         """
@@ -33,18 +33,62 @@ def _(mo):
 
 
 @app.cell
+def _(mo):
+    mo.md("### TLDR")
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(" everything works as normal using functions such as [```.is_null```](https://docs.pola.rs/api/python/stable/reference/expressions/api/polars.Expr.is_null.html) to check for missing values, [```fill_null```](https://docs.pola.rs/api/python/stable/reference/expressions/api/polars.Expr.fill_null.html), and [`drop`]() to replace the missing values and to drop them. taking special note of variables with String cases see the Strings notebook for more.")
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("Before that lets do a review of how Polars datatypes work  specifically String objects up until this point ")
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("On the note of the Polars datatype specific features we can mention the null types of Polars of NaN and null. In practice when applying these functions ")
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("For the purposes of this guide we won't mention all pelicularities that may come from pandas conversions")
+    return
+
+
+@app.cell
 def _():
     import polars as pl
 
     # Create a DataFrame with various kinds of missing data
-    df = pl.DataFrame({
-        "id": [1, 2, 3, 4, 5],
-        "age": [25, None, 37, 29, None],
-        "height_cm": [170.0, 165.5, None, 180.2, 175.0],
-        "score": [85, 92,  None, None, 88]
-    })
+    df = pl.DataFrame(
+        {
+            "A": [1, 2, 3, 4, 5],
+            "fruits": ["banana", None, "apple", "apple", "banana"],
+            "age": [25, None, 37, 29, None],
+            "B": [5, 4, 3, 2, 1],
+            "score": [85, 92,  None, None, 88],
+            "height_cm": [170.0, 165.5, None, 180.2, 175.0],
+
+        }
+    )
     df
     return df, pl
+
+
+app._unparsable_cell(
+    r"""
+    # make a sliding df with the intention of making it switch thru the null type cases and the variables using the mo.md ui style
+    pl.DataFrame(
+    """,
+    name="_"
+)
 
 
 @app.cell(hide_code=True)
