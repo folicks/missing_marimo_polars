@@ -34,31 +34,26 @@ def _(mo):
 
 @app.cell
 def _(mo):
-    mo.md("### TLDR")
+    mo.accordion({
+        "### TLDR":"""everything works as normal using functions such as [```.is_null```](https://docs.pola.rs/api/python/stable/reference/expressions/api/polars.Expr.is_null.html) to check for missing values, [```fill_null```](https://docs.pola.rs/api/python/stable/reference/expressions/api/polars.Expr.fill_null.html), and [`drop`]() to replace the missing values and to drop them. taking special note of variables with String cases see the Strings notebook for more."""
+    })
     return
 
 
 @app.cell
 def _(mo):
-    mo.md(" everything works as normal using functions such as [```.is_null```](https://docs.pola.rs/api/python/stable/reference/expressions/api/polars.Expr.is_null.html) to check for missing values, [```fill_null```](https://docs.pola.rs/api/python/stable/reference/expressions/api/polars.Expr.fill_null.html), and [`drop`]() to replace the missing values and to drop them. taking special note of variables with String cases see the Strings notebook for more.")
+    mo.md("""Before that lets do a review of how Polars datatypes work  specifically String objects up until this point""")
     return
 
 
 @app.cell
 def _(mo):
-    mo.md("Before that lets do a review of how Polars datatypes work  specifically String objects up until this point ")
+    mo.md("""On the note of the Polars datatype specific features we can mention the null types of Polars of NaN and null.""")
     return
 
 
 @app.cell
-def _(mo):
-    mo.md("On the note of the Polars datatype specific features we can mention the null types of Polars of NaN and null. In practice when applying these functions ")
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("For the purposes of this guide we won't mention all pelicularities that may come from pandas conversions")
+def _():
     return
 
 
@@ -66,7 +61,6 @@ def _(mo):
 def _():
     import polars as pl
 
-    # Create a DataFrame with various kinds of missing data
     df = pl.DataFrame(
         {
             "A": [1, 2, 3, 4, 5],
@@ -80,6 +74,44 @@ def _():
     )
     df
     return df, pl
+
+
+@app.cell
+def _(mo):
+    mo.md("""Where ```null``` is what is used in dataset features of with datatype other floats and ```NaN``` is used in the dataset features witha  datatype of float""")
+    return
+
+
+@app.cell
+def _():
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""For the purposes of this guide we won't mention all pelicularities that may come from pandas conversions""")
+    return
+
+
+@app.cell
+def _(mo):
+    data_filler = mo.ui.dropdown(["NaN","None","null"],value="null")
+    #the idea is to place the desired missing data types into the spots of the data perforable at random idk what the value would be tbh
+
+
+    return (data_filler,)
+
+
+@app.cell
+def _(data_filler, mo):
+    reps = mo.ui.slider(1,10, label=f"type of missing values {data_filler.value}")
+    return (reps,)
+
+
+@app.cell
+def _(data_filler, reps):
+    data_filler,reps
+    return
 
 
 app._unparsable_cell(
@@ -150,6 +182,12 @@ def _(mo):
 
 
 @app.cell
+def _(mo):
+    mo.md("""Theres also an alternative function ```interpolate``` that can be used to fill missing values in a column with the average of the surrounding values. This is useful when you have a time series or a sequence of values and you want to fill in the gaps with a smooth transition.""")
+    return
+
+
+@app.cell
 def _(df):
     filled_constant = df.fill_null(0)
     filled_ffill = df.fill_null(strategy="forward")
@@ -194,6 +232,18 @@ def _(mo):
 
 
 @app.cell
+def _(mo):
+    mo.md("""###Going Further""")
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md("""you'll notice I hardly mention the null types of Polars of NaN and null. In practice when applying these functions you'll notice that the null types are not the same as the missing values in pandas. For example, if you have a column with NaN values, and you apply `fill_null(0)`, it will replace the NaN values with 0, but it won't change the dtype of the column. This is different from pandas, where filling NaN values with 0 will change the dtype of the column to int.""")
+    return
+
+
+@app.cell
 def _(pl):
     # assume large CSV with missing values
     lazy_df = pl.scan_csv("large_with_nulls.csv")
@@ -208,6 +258,11 @@ def _(pl):
     return lazy_df, result
 
 
+@app.cell
+def _():
+    return
+
+
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(
@@ -215,9 +270,14 @@ def _(mo):
         ## 🔖 References
 
         - Polars documentation: https://pola.rs/docs  
-        - Handling missing data in Polars: https://pola.rs/docs/reference/expressions#nulls
+        - Handling missing data in Polars: https://docs.pola.rs/user-guide/expressions/missing-data/
         """
     )
+    return
+
+
+@app.cell
+def _():
     return
 
 
