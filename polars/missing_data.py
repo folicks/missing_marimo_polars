@@ -278,7 +278,28 @@ def _(mo):
 
 @app.cell
 def _():
+    import sys
+
+    if "pyodide" in sys.modules:
+        import micropip
+        await micropip.install("polars")
+            
+        import polars as pl
+        return (pl,)
     return
+
+@app.cell
+async def _():
+    import sys
+
+    if "pyodide" in sys.modules:
+        import micropip
+        await micropip.install("polars")
+
+    import polars as pl
+    return (pl,)
+
+
 
 
 if __name__ == "__main__":
